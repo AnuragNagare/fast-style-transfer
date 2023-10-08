@@ -111,13 +111,17 @@ def ffwd(data_in, paths_out, checkpoint_dir, device_t='/gpu:0', batch_size=4):
                 for j, path_in in enumerate(curr_batch_in):
                     img = get_img(path_in)
                     assert img.shape == img_shape, \
-                        'Images have different dimensions. ' +  \
+                        'Images have different dimensions. '+\
                         'Resize images or use --allow-different-dimensions.'
                     X[j] = img
             else:
                 X = data_in[pos:pos+batch_size]
 
-            _preds = sess.run(preds, feed_dict={img_placeholder:X})
+            # Perform multiple iterations with different hyperparameters
+            for iteration in range(num_iterations):
+                _, _preds = sess.run([train_op, preds], feed_dict={img_placeholder: X})
+                # You can also apply other custom optimization strategies here if needed
+
             for j, path_out in enumerate(curr_batch_out):
                 save_img(path_out, _preds[j])
                 
