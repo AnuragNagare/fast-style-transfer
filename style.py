@@ -14,6 +14,7 @@ if len(physical_devices) > 0:
 #The error message you're encountering is a "ResourceExhaustedError," indicating that your TensorFlow model is running out of GPU memory (OOM - Out Of Memory) 
 #when allocating a tensor with a specific shape.
 #ensorFlow allows you to limit the amount of GPU memory it can allocate. 
+
 #You can do this using the tf.config.experimental.set_memory_growth method to allocate memory only as needed.
 
 CONTENT_WEIGHT = 7.5e0
