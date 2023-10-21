@@ -6,6 +6,15 @@ from optimize import optimize
 from argparse import ArgumentParser
 from utils import save_img, get_img, exists, list_files
 import evaluate
+import tensorflow as tf
+physical_devices = tf.config.list_physical_devices('GPU')
+if len(physical_devices) > 0:
+    tf.config.experimental.set_memory_growth(physical_devices[0], True)
+
+#The error message you're encountering is a "ResourceExhaustedError," indicating that your TensorFlow model is running out of GPU memory (OOM - Out Of Memory) 
+#when allocating a tensor with a specific shape.
+#ensorFlow allows you to limit the amount of GPU memory it can allocate. 
+#You can do this using the tf.config.experimental.set_memory_growth method to allocate memory only as needed.
 
 CONTENT_WEIGHT = 7.5e0
 STYLE_WEIGHT = 1e2
